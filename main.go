@@ -7,39 +7,38 @@ import (
 	"strings"
 )
 
-// Определение структуры Text
+// Тип Text представляет собой структуру для хранения текста
 type Text struct {
 	Content string
 }
 
-// Метод для модификации текста
+// Метод textModifier выводит текст после обработки
 func (t *Text) textModifier() {
-	t.Content = strings.ReplaceAll(t.Content, "  ", " ") // Замена нескольких пробелов на один
-	fmt.Println("Результат после удаления лишних пробелов:", t.Content)
+	// Разбиваем строку на слова, удаляя все лишние пробелы
+	words := strings.Fields(t.Content)
+	// Собираем строку обратно, добавляя ровно один пробел между словами
+	processedContent := strings.Join(words, " ")
+	fmt.Println("Результат после удаления лишних пробелов:", processedContent)
 }
 
 func main() {
-	// Создание пустого экземпляра структуры
-	text := &Text{}
+	text := &Text{} // Создаем экземпляр структуры Text
 
 	// Создаем новый сканер для чтения из стандартного ввода
 	scanner := bufio.NewScanner(os.Stdin)
 
 	// Просим пользователя ввести строку
-	fmt.Println("Введите строку:")
+	fmt.Println("Введите строку (для завершения нажмите Enter без ввода текста):")
 
 	for scanner.Scan() {
-		// Присваиваем введённое значение полю Content структуры
-		text.Content = scanner.Text()
+		input := scanner.Text()
+		if input == "" { // Условие выхода из цикла при пустом вводе
+			break
+		}
 
-		// Применяем модификацию текста
+		text.Content = input
+		fmt.Println("Вы ввели: ", text.Content)
 		text.textModifier()
-	}
-
-	// Проверяем наличие ошибок
-	if err := scanner.Err(); err != nil {
-		fmt.Fprintln(os.Stderr, "Ошибка чтения:", err)
-		os.Exit(1)
 	}
 }
 
