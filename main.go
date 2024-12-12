@@ -19,17 +19,25 @@ func (t *Text) textModifier() {
 		t.Content = strings.ReplaceAll(t.Content, "  ", " ")
 	}
 
-	// Обрабатываем знак минус (-)
+	// Обрабатываем знак минус
 	runes := []rune(t.Content)
 	result := []rune{}
 	i := 0
 	for i < len(runes) {
 		if runes[i] == '-' {
 			if i > 0 && i < len(runes)-1 {
-				// Меняем местами символы слева и справа от минуса
+				// Меняем местами  слева и справа от минуса
+				// fmt.Println(i)
+				// fmt.Println(runes[i-1], runes[i+1])
 				runes[i-1], runes[i+1] = runes[i+1], runes[i-1]
+				// fmt.Println(runes[i-1], runes[i+1])
+				// удалить предидущую букву (тк она уже там добавлена)
+				// пропустить место минуса,
+
+				// result = append(result, runes[i])
+
 			}
-			i++ // Пропускаем символ минус
+			i++ // Пропускаем  минус
 		} else {
 			result = append(result, runes[i])
 		}
@@ -81,22 +89,9 @@ func main() {
 	}
 }
 
-// func (t *Text) textModifier() {
+//    https://github.com/Tiger-A/GO.git
 
-// // Заменяем все подряд идущие пробелы на один
-// resultString = strings.ReplaceAll(resultString, "  ", " ")
-
-// // Повторяем замену до тех пор, пока не останется только один пробел
-// for strings.Contains(resultString, "  ") {
-// resultString = strings.ReplaceAll(resultString, "  ", " ")
-// // Возможно правильнее было бы встроить это в цикл ниже?
-
-// 	fmt.Println(t.Content)
-// }
-
-// 2. Допустим это символы а, б, 5,   действия: для первого случая-  удалить найденную букву из строки, второго -добавить еще одну такую же букву,  посчитать все цифры в строке
-
-// 1. Пользователь вводит текст одной строкой и нажимает “enter”.
+//  1. Пользователь вводит текст одной строкой и нажимает “enter”.
 
 // 2. В тексте могут присутствовать различные специальные символы, которые надо обрабатывать согласно условиям ниже:
 
